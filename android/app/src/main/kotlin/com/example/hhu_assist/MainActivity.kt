@@ -1,0 +1,6 @@
+package com.example.hhu_assist
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
