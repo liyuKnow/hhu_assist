@@ -297,28 +297,67 @@ class _CustomEditFormState extends State<CustomEditForm> {
 
                 // Save Location if not Exists
                 if (isValidForm) {
-                  // CustomDialog.show(context, "Success",
-                  //     "Customer Id: ${_custIdController.text}");
-
                   // update record based on customer id and registry
                   // if there is no location record a single location data
-                  if (!widget.args.hasHistory) {
-                    print("Saving Location Here!");
-                    final reading = objectbox
-                        .getReadingByCustomerId(widget.args.customerId);
-                    objectbox.addLocationHistory(widget.args.currentLat,
-                        widget.args.currentLong, reading!);
-                  } else {
-                    print("Location exists!");
+                  // if (!widget.args.hasHistory) {
+                  //   print("Saving Location Here!");
+                  //   final reading = objectbox
+                  //       .getReadingByCustomerId(widget.args.customerId);
+                  //   objectbox.addLocationHistory(widget.args.currentLat,
+                  //       widget.args.currentLong, reading!);
+                  // } else {
+                  //   print("Location exists!");
+                  // }
+
+                  var readingDate = DateTime.now();
+                  // check if the registries  and update accordingly
+                  if (_readingRegistryOne.text != "") {
+                    var readingRegOne = objectbox.getReadingByRegistry(
+                        readings[0]!.customerId, 1);
+                    if (readingRegOne != null) {
+                      readingRegOne.status = true;
+                      readingRegOne.readingDate = readingDate;
+                      // readingRegOne.anomalies = _selectedRemark;
+                      readingRegOne.meterReading =
+                          double.parse(_readingRegistryOne.text.toString());
+
+                      objectbox.putReading(readingRegOne);
+                    }
                   }
+
+                  if (_readingRegistryTwo.text != "") {
+                    var readingRegTwo = objectbox.getReadingByRegistry(
+                        readings[0]!.customerId, 2);
+                    if (readingRegTwo != null) {
+                      readingRegTwo.status = true;
+                      readingRegTwo.readingDate = readingDate;
+                      // readingRegTwo.anomalies = _selectedRemark;
+                      readingRegTwo.meterReading =
+                          double.parse(_readingRegistryTwo.text.toString());
+
+                      objectbox.putReading(readingRegTwo);
+                    }
+                  }
+
+                  if (_readingRegistryThree.text != "") {
+                    var readingRegThree = objectbox.getReadingByRegistry(
+                        readings[0]!.customerId, 3);
+                    if (readingRegThree != null) {
+                      readingRegThree.status = true;
+                      readingRegThree.readingDate = readingDate;
+                      // readingRegThree.anomalies = _selectedRemark;
+                      readingRegThree.meterReading =
+                          double.parse(_readingRegistryThree.text.toString());
+
+                      objectbox.putReading(readingRegThree);
+                    }
+                  }
+
+                  CustomDialog.show(
+                      context, "Success", "Record saved successfully");
+
+                  Navigator.pushNamed(context, '/readings');
                 }
-
-                // check if the registries  and update accordingly
-                if (_readingRegistryOne.text != "") {}
-
-                if (_readingRegistryTwo.text != "") {}
-
-                if (_readingRegistryThree.text != "") {}
               },
               child: const Text('Submit'),
             ),

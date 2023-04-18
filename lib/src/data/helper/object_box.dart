@@ -63,6 +63,17 @@ class ObjectBox {
     return readings;
   }
 
+  Reading? getReadingByRegistry(String customerId, int registry) {
+    final query = store
+        .box<Reading>()
+        .query(Reading_.customerId.equals(customerId) &
+            Reading_.registry.equals(registry))
+        .build();
+    final reading = query.findFirst();
+
+    return reading;
+  }
+
   List<LocationHistory>? getLocations() {
     final query = locationHistoryBox.query().build();
     List<LocationHistory> locations = query.find();
