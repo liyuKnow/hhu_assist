@@ -32,7 +32,16 @@ class EditScreenArguments {
   final String customerId;
   final bool hasHistory;
   final bool isInAllowedDistance;
+  final double currentLat;
+  final double currentLong;
+  final String previousLocation;
 
   EditScreenArguments(
-      this.customerId, this.hasHistory, this.isInAllowedDistance);
+    this.customerId,
+    this.hasHistory,
+    this.isInAllowedDistance,
+    this.currentLat,
+    this.currentLong,
+    this.previousLocation,
+  );
 }

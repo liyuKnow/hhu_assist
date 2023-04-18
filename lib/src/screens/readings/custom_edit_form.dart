@@ -20,6 +20,10 @@ class _CustomEditFormState extends State<CustomEditForm> {
   final _custIdController = TextEditingController();
   final _custName = TextEditingController();
   final _deviceId = TextEditingController();
+  final _legacyAccNo = TextEditingController();
+  final _meterReadingUnit = TextEditingController();
+  final _currentLocation = TextEditingController();
+  final _prevLocation = TextEditingController();
   final _readingRegistryOne = TextEditingController();
   final _readingRegistryTwo = TextEditingController();
   final _readingRegistryThree = TextEditingController();
@@ -27,13 +31,23 @@ class _CustomEditFormState extends State<CustomEditForm> {
   List<Reading?> readings = [];
 
   bool isAllowed = true;
-  late double? currentLat = 0;
-  late double? currentLong = 0;
+  late double? currentLat = 0.0;
+  late double? currentLong = 0.0;
 
   @override
   void initState() {
     super.initState();
     readings = objectbox.getReadingsByCustomerId(widget.args.customerId);
+    if (readings != null) {
+      _custIdController.text = readings[0]!.customerId;
+      _custName.text = readings[0]!.customerName;
+      _deviceId.text = readings[0]!.deviceId;
+      _legacyAccNo.text = readings[0]!.customerId;
+      _meterReadingUnit.text = readings[0]!.meterReadingUnit;
+    }
+    _currentLocation.text =
+        "${widget.args.currentLat} , ${widget.args.currentLong}";
+    _prevLocation.text = widget.args.previousLocation;
   }
 
   @override
@@ -41,7 +55,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Form"),
+        title: Text("Enter Reading"),
       ),
       body: readingForm(context),
     );
@@ -83,7 +97,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
               // enabled: false,
               readOnly: true,
               // initialValue: "Default Values",
-              // controller: _custIdController,
+              controller: _custName,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
                   Icons.person,
@@ -105,10 +119,10 @@ class _CustomEditFormState extends State<CustomEditForm> {
               // enabled: false,
               readOnly: true,
               // initialValue: "Device",
-              // controller: _custIdController,
+              controller: _legacyAccNo,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
-                  Icons.person,
+                  Icons.book,
                 ),
                 labelText: 'Legacy Acc. No.',
               ),
@@ -123,12 +137,12 @@ class _CustomEditFormState extends State<CustomEditForm> {
               // enabled: false,
               readOnly: true,
               // initialValue: "Device",
-              // controller: _custIdController,
+              controller: _meterReadingUnit,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
-                  Icons.person,
+                  Icons.electric_meter_outlined,
                 ),
-                labelText: 'Meter Reading',
+                labelText: 'Meter Reading Unit',
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -141,10 +155,10 @@ class _CustomEditFormState extends State<CustomEditForm> {
               // enabled: false,
               readOnly: true,
               // initialValue: "Device",
-              // controller: _custIdController,
+              controller: _deviceId,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
-                  Icons.person,
+                  Icons.dashboard_outlined,
                 ),
                 labelText: 'Device Id',
               ),
@@ -155,32 +169,37 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 return null;
               },
             ),
-            TextFormField(
-              // enabled: false,
-              readOnly: true,
-              // initialValue: "Device",
-              // controller: _custIdController,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.person,
+            Container(
+              color: widget.args.isInAllowedDistance
+                  ? Color.fromARGB(255, 113, 230, 138)
+                  : Color.fromARGB(255, 240, 132, 132),
+              child: TextFormField(
+                // enabled: false,
+                readOnly: true,
+                controller: _currentLocation,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.location_pin,
+                  ),
+                  labelText: 'Current Location',
+                  fillColor: Colors.amber,
                 ),
-                labelText: 'Current Location',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
             ),
             TextFormField(
               // enabled: false,
               readOnly: true,
               // initialValue: "Device",
-              // controller: _custIdController,
+              controller: _prevLocation,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
-                  Icons.person,
+                  Icons.location_searching,
                 ),
                 labelText: 'Previous Location',
               ),
@@ -193,6 +212,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
             ),
             TextFormField(
               controller: _readingRegistryOne,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
                   Icons.person,
@@ -205,18 +225,17 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 }
                 return null;
               },
-              onSaved: (value) {
-                print(value);
-              },
             ),
+
             if (readings.length == 3)
               Column(
                 children: [
                   TextFormField(
                     controller: _readingRegistryTwo,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(
-                        Icons.person,
+                        Icons.track_changes_outlined,
                       ),
                       labelText: 'Reading registry two',
                     ),
@@ -226,12 +245,10 @@ class _CustomEditFormState extends State<CustomEditForm> {
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      print(value);
-                    },
                   ),
                   TextFormField(
                     controller: _readingRegistryThree,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
@@ -243,9 +260,6 @@ class _CustomEditFormState extends State<CustomEditForm> {
                         return 'Please enter your name';
                       }
                       return null;
-                    },
-                    onSaved: (value) {
-                      print(value);
                     },
                   ),
                 ],
@@ -281,19 +295,30 @@ class _CustomEditFormState extends State<CustomEditForm> {
               onPressed: () {
                 final isValidForm = _formKey.currentState!.validate();
 
+                // Save Location if not Exists
                 if (isValidForm) {
-                  //   _formKey.currentState?.save();
-                  CustomDialog.show(context, "Success",
-                      "Customer Id: ${_custIdController.text}");
+                  // CustomDialog.show(context, "Success",
+                  //     "Customer Id: ${_custIdController.text}");
 
-                  print("Customer Id: ${_custIdController.text}");
-                  print("Reading Registry One: ${_readingRegistryOne.text}");
-                  print("Reading Registry Two: ${_readingRegistryTwo.text}");
-                  print(
-                      "Reading Registry Three: ${_readingRegistryThree.text}");
-                  // newDialogue(context,
-                  //     contentText: 'Name: $_name\nEmail: $_email');
+                  // update record based on customer id and registry
+                  // if there is no location record a single location data
+                  if (!widget.args.hasHistory) {
+                    print("Saving Location Here!");
+                    final reading = objectbox
+                        .getReadingByCustomerId(widget.args.customerId);
+                    objectbox.addLocationHistory(widget.args.currentLat,
+                        widget.args.currentLong, reading!);
+                  } else {
+                    print("Location exists!");
+                  }
                 }
+
+                // check if the registries  and update accordingly
+                if (_readingRegistryOne.text != "") {}
+
+                if (_readingRegistryTwo.text != "") {}
+
+                if (_readingRegistryThree.text != "") {}
               },
               child: const Text('Submit'),
             ),
@@ -303,41 +328,3 @@ class _CustomEditFormState extends State<CustomEditForm> {
     );
   }
 }
-
-
-
-
-// body: ListView.builder(
-      //   itemCount: readings.length,
-      //   itemBuilder: ((context, index) {
-      //     // return ListTile(title: Text(readings[index]!.customerId.toString()));
-      //     return ListTile(
-      //       title: Text(
-      //         readings[index]!.customerId,
-      //         style: const TextStyle(
-      //           fontSize: 18.0,
-      //           fontWeight: FontWeight.bold,
-      //         ),
-      //       ),
-      //       subtitle: Text(
-      //         'Subtitle for item $index',
-      //         style: const TextStyle(
-      //           fontSize: 14.0,
-      //           color: Colors.grey,
-      //         ),
-      //       ),
-      //       leading: CircleAvatar(
-      //         child: Text(
-      //           readings[index]!.customerName,
-      //           style: const TextStyle(
-      //             fontWeight: FontWeight.bold,
-      //           ),
-      //         ),
-      //       ),
-      //       trailing: Icon(Icons.arrow_forward),
-      //       onTap: () {
-      //         // Handle tap on list item
-      //       },
-      //     );
-      //   }),
-      // ),

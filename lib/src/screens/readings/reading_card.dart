@@ -20,18 +20,26 @@ class _ReadingCardState extends State<ReadingCard> {
     return GestureDetector(
       onTap: (() async {
         bool hasHistory = false;
-        bool isInAllowedDistance = false;
+        bool isInAllowedDistance = true;
+        double currentLat = 0.0;
+        double currentLong = 0.0;
+        String previousLocation = "No previous Location!";
 
         LocationHistory? locationHistory =
             await objectbox.getLocationHistory(widget.reading.customerId);
 
+        PermissionController.requestLocation();
+
+        var location = Location();
+        final loc = await location.getLocation();
+
+        currentLat = loc.latitude!;
+        currentLong = loc.longitude!;
+
         if (locationHistory != null) {
           hasHistory = true;
+          previousLocation = "${locationHistory.lat},${locationHistory.long}";
           // get current location data
-          PermissionController.requestLocation();
-
-          var location = Location();
-          final loc = await location.getLocation();
 
           var distance = Haversine.haversine(
             locationHistory.lat,
@@ -39,7 +47,7 @@ class _ReadingCardState extends State<ReadingCard> {
             loc.latitude,
             loc.longitude,
           );
-
+          print("Distance $distance");
           isInAllowedDistance = (distance < 50) ? true : false;
         }
 
@@ -47,6 +55,9 @@ class _ReadingCardState extends State<ReadingCard> {
           widget.reading.customerId,
           hasHistory,
           isInAllowedDistance,
+          currentLat,
+          currentLong,
+          previousLocation,
         );
 
         Navigator.pushNamed(context, '/multi_edit', arguments: args);

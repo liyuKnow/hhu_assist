@@ -125,10 +125,7 @@ class _QRScreenState extends State<QRScreen> {
           //   }
 
           EditScreenArguments args = EditScreenArguments(
-            "2001320409",
-            false,
-            false,
-          );
+              "2001320409", false, false, 0.0, 0.0, "Location not found");
           Navigator.pushNamed(context, '/edit_reading', arguments: args);
         } else {
           print("Reading didnt match error");
