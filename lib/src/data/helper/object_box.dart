@@ -25,13 +25,14 @@ class ObjectBox {
   }
 
   Stream<List<Reading>> getReadings() {
-    final builder = readingBox.query();
+    final builder = readingBox.query(Reading_.status.equals(false));
     return builder.watch(triggerImmediately: true).map((query) => query.find());
   }
 
   Stream<List<Reading>> searchReadings(String q) {
     final builder = readingBox.query(
-      Reading_.customerId.contains(q) | Reading_.deviceId.contains(q),
+      (Reading_.customerId.contains(q) | Reading_.deviceId.contains(q)) &
+          Reading_.status.equals(false),
     );
     // final builder = readingBox.query();
     return builder.watch(triggerImmediately: true).map((query) => query.find());

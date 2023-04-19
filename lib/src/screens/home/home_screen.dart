@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // READINGS MENU TILE
             MenuTile(
               onTap: () {
                 Navigator.pushNamed(context, '/readings');
@@ -29,6 +30,7 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.list_alt, size: 49, color: kWhiteColor),
               bgColor: kLimeColor,
             ),
+            // CAMERA SCREEN MENU TILE
             MenuTile(
               onTap: () {
                 Navigator.pushNamed(context, '/camera_screen');
@@ -45,6 +47,7 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.camera_alt, size: 49, color: kWhiteColor),
               bgColor: kBlueColor,
             ),
+            // QR MENU TILE
             MenuTile(
               onTap: () {
                 Navigator.pushNamed(context, '/qr');

@@ -267,7 +267,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text("Remark"),
+                const Text("Anomalies"),
                 DropdownButtonFormField<String>(
                   onChanged: (String? newValue) {
                     if (newValue != null) {
@@ -284,7 +284,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     );
                   }).toList(),
                   decoration: const InputDecoration(
-                    labelText: "Remark",
+                    labelText: "Anomalies",
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -299,15 +299,15 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 if (isValidForm) {
                   // update record based on customer id and registry
                   // if there is no location record a single location data
-                  // if (!widget.args.hasHistory) {
-                  //   print("Saving Location Here!");
-                  //   final reading = objectbox
-                  //       .getReadingByCustomerId(widget.args.customerId);
-                  //   objectbox.addLocationHistory(widget.args.currentLat,
-                  //       widget.args.currentLong, reading!);
-                  // } else {
-                  //   print("Location exists!");
-                  // }
+                  if (!widget.args.hasHistory) {
+                    print("Saving Location Here!");
+                    final readings = objectbox
+                        .getReadingsByCustomerId(widget.args.customerId);
+                    objectbox.addLocationHistory(widget.args.currentLat,
+                        widget.args.currentLong, readings[0]!);
+                  } else {
+                    print("Location exists!");
+                  }
 
                   var readingDate = DateTime.now();
                   // check if the registries  and update accordingly

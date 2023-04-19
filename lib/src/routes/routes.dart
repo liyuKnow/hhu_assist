@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hhu_assist/src/controller/haversine.dart';
-import 'package:hhu_assist/src/data/models/model.dart';
 import 'package:hhu_assist/src/screens/screens.dart';
 
 class Routes {
@@ -20,14 +19,6 @@ class Routes {
                   ));
         }
         return _errorRoute();
-      // case '/edit_reading':
-      //   if (args is EditScreenArguments) {
-      //     return MaterialPageRoute(
-      //         builder: (_) => EditReading(
-      //               args: args,
-      //             ));
-      //   }
-      //   return _errorRoute();
       case '/camera_screen':
         return MaterialPageRoute(builder: (_) => const CameraScreen());
       case '/qr':

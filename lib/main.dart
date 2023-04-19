@@ -28,11 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // useMaterial3: true,
       ),
-      // initialRoute: '/',
-      // initialRoute: '/from_api',
-      initialRoute: '/readings',
-      // initialRoute: '/qr',
-      // initialRoute: '/multi_edit',
+      initialRoute: '/',
       onGenerateRoute: Routes.generateRoute,
     );
   }
