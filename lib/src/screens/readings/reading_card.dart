@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hhu_assist/src/controller/permissions_controller.dart';
-
-import 'package:location/location.dart';
-import 'package:hhu_assist/src/data/models/model.dart';
 import 'package:hhu_assist/main.dart';
+
+import 'package:hhu_assist/src/res/strings.dart';
+import 'package:location/location.dart';
+import 'package:hhu_assist/src/controller/permissions_controller.dart';
+import 'package:hhu_assist/src/data/models/model.dart';
 import 'package:hhu_assist/src/controller/haversine.dart';
 
 class ReadingCard extends StatefulWidget {
@@ -48,7 +49,7 @@ class _ReadingCardState extends State<ReadingCard> {
             loc.longitude,
           );
           print("Distance $distance");
-          isInAllowedDistance = (distance < 50) ? true : false;
+          isInAllowedDistance = (distance < allowedDistance) ? true : false;
         }
 
         EditScreenArguments args = EditScreenArguments(

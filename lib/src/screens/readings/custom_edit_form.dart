@@ -72,9 +72,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
             // Form Fields
 
             TextFormField(
-              // enabled: false,
               readOnly: true,
-              // initialValue: "Default Values",
               controller: _custIdController,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -82,21 +80,9 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 ),
                 labelText: 'Customer Id',
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
-              // onSaved: (value) {
-              //   print(value);
-              //   _custIdController = value;
-              // },
             ),
             TextFormField(
-              // enabled: false,
               readOnly: true,
-              // initialValue: "Default Values",
               controller: _custName,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -104,21 +90,9 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 ),
                 labelText: 'Customer Name',
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
-              // onSaved: (value) {
-              //   print(value);
-              //   _custIdController = value;
-              // },
             ),
             TextFormField(
-              // enabled: false,
               readOnly: true,
-              // initialValue: "Device",
               controller: _legacyAccNo,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -126,17 +100,9 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 ),
                 labelText: 'Legacy Acc. No.',
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
             ),
             TextFormField(
-              // enabled: false,
               readOnly: true,
-              // initialValue: "Device",
               controller: _meterReadingUnit,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -144,17 +110,9 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 ),
                 labelText: 'Meter Reading Unit',
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
             ),
             TextFormField(
-              // enabled: false,
               readOnly: true,
-              // initialValue: "Device",
               controller: _deviceId,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -162,12 +120,6 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 ),
                 labelText: 'Device Id',
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
             ),
             Container(
               color: widget.args.isInAllowedDistance
@@ -182,20 +134,11 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     Icons.location_pin,
                   ),
                   labelText: 'Current Location',
-                  fillColor: Colors.amber,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
               ),
             ),
             TextFormField(
-              // enabled: false,
               readOnly: true,
-              // initialValue: "Device",
               controller: _prevLocation,
               decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -203,14 +146,9 @@ class _CustomEditFormState extends State<CustomEditForm> {
                 ),
                 labelText: 'Previous Location',
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
             ),
             TextFormField(
+              readOnly: widget.args.isInAllowedDistance ? false : true,
               controller: _readingRegistryOne,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
@@ -221,7 +159,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter your name';
+                  return 'Reading entry can not be empty';
                 }
                 return null;
               },
