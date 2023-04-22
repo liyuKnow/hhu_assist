@@ -42,7 +42,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
       _custIdController.text = readings[0]!.customerId;
       _custName.text = readings[0]!.customerName;
       _deviceId.text = readings[0]!.deviceId;
-      _legacyAccNo.text = readings[0]!.customerId;
+      _legacyAccNo.text = readings[0]!.legacy.toString();
       _meterReadingUnit.text = readings[0]!.meterReadingUnit;
     }
     _currentLocation.text =
@@ -230,7 +230,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
             ),
             // Submit Button
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final isValidForm = _formKey.currentState!.validate();
 
                 // Save Location if not Exists
@@ -255,7 +255,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     if (readingRegOne != null) {
                       readingRegOne.status = true;
                       readingRegOne.readingDate = readingDate;
-                      // readingRegOne.anomalies = _selectedRemark;
+                      readingRegOne.appearanceValue = _selectedRemark;
                       readingRegOne.meterReading =
                           double.parse(_readingRegistryOne.text.toString());
 
@@ -269,7 +269,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     if (readingRegTwo != null) {
                       readingRegTwo.status = true;
                       readingRegTwo.readingDate = readingDate;
-                      // readingRegTwo.anomalies = _selectedRemark;
+                      readingRegTwo.appearanceValue = _selectedRemark;
                       readingRegTwo.meterReading =
                           double.parse(_readingRegistryTwo.text.toString());
 
@@ -283,7 +283,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     if (readingRegThree != null) {
                       readingRegThree.status = true;
                       readingRegThree.readingDate = readingDate;
-                      // readingRegThree.anomalies = _selectedRemark;
+                      readingRegThree.appearanceValue = _selectedRemark;
                       readingRegThree.meterReading =
                           double.parse(_readingRegistryThree.text.toString());
 
