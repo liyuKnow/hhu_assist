@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:image_picker/image_picker.dart";
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:path/path.dart' as path;
 import "package:intl/intl.dart";
+import 'package:hhu_assist/main.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -15,6 +17,13 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   File? image;
+  List<String> items = [];
+
+  @override
+  void initState() {
+    items = objectbox.getCustomerIds();
+    super.initState();
+  }
 
   Future saveImageToDownloads() async {
     try {
@@ -52,37 +61,56 @@ class _CameraScreenState extends State<CameraScreen> {
     return formatter.format(dateTime);
   }
 
+  void itemSelectionChanged(String? item) {
+    print("Is this Printing at all");
+    print(item);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('take Image')),
-        body: Padding(
+      appBar: AppBar(title: const Text('take Image')),
+      body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Insert Customer ID"),
-              ),
-              IconButton(
-                onPressed: () => saveImageToDownloads(),
-                icon: const Icon(Icons.camera),
-              ),
-              image != null
-                  ? Image.file(
-                      image!,
-                      width: 300,
-                      height: 300,
-                    )
-                  : Image.asset(
-                      "assets/placeholder_350x250.png",
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
-            ],
-          ),
-        ));
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                DropdownSearch<String>(
+                  mode: Mode.MENU,
+                  showSelectedItems: true,
+                  items: ["static", "files"],
+                  dropdownSearchDecoration: const InputDecoration(
+                    labelText: "Business partner Id",
+                    hintText: "Business partner id number",
+                  ),
+                  showSearchBox: true,
+                  onChanged: itemSelectionChanged,
+                  searchFieldProps: const TextFieldProps(
+                    cursorColor: Colors.blue,
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                IconButton(
+                  onPressed: () => saveImageToDownloads(),
+                  icon: const Icon(Icons.camera),
+                ),
+                image != null
+                    ? Image.file(
+                        image!,
+                        width: 300,
+                        height: 300,
+                      )
+                    : Image.asset(
+                        "assets/placeholder_350x250.png",
+                        width: 300,
+                        height: 300,
+                        fit: BoxFit.cover,
+                      ),
+              ],
+            ),
+          )),
+    );
   }
 }

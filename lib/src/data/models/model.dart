@@ -55,6 +55,8 @@ class Reading {
     status = !status;
     return status;
   }
+
+  String get getCustomerId => this.customerId;
 }
 
 @Entity()

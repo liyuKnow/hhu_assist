@@ -98,4 +98,21 @@ class ObjectBox {
 
     locationHistoryBox.put(locationHistory);
   }
+
+  Stream<List<String>> searchCustomerIds(String q) {
+    final builder = readingBox.query(
+      (Reading_.customerId.contains(q)),
+    );
+    return builder.watch(triggerImmediately: true).map(
+        (query) => query.find().map((reading) => reading.customerId).toList());
+  }
+
+  List<String> getCustomerIds() {
+    Query<Reading> query = readingBox.query().build();
+    List<String> customerIds =
+        query.find().map((reading) => reading.customerId).toList();
+    query.close();
+
+    return customerIds;
+  }
 }
