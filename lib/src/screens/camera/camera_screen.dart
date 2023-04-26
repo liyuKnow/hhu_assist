@@ -18,6 +18,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   File? image;
   List<String> items = [];
+  String selectedCustomerId = "";
 
   @override
   void initState() {
@@ -27,30 +28,48 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Future saveImageToDownloads() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (selectedCustomerId.isNotEmpty) {
+        final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
-      if (image == null) return null;
+        if (image == null) return null;
 
-      final oldPath = image.path;
-      final extension = path.extension(oldPath);
-      final timestamp = DateTime.now();
+        final oldPath = image.path;
+        final extension = path.extension(oldPath);
+        final timestamp = DateTime.now();
 
-      // Rename image
-      final newImgName = 'customer_Id_${customTimeStamp(timestamp)}$extension';
+        // Rename image
+        final newImgName =
+            '${selectedCustomerId}_${customTimeStamp(timestamp)}$extension';
 
-      // get or create hhu directory
-      final hhuDirectory = Directory('/storage/emulated/0/Download/HHU_Assist');
+        // get or create hhu directory
+        final hhuDirectory =
+            Directory('/storage/emulated/0/Download/HHU Helper');
 
-      if (!await hhuDirectory.exists()) {
-        await hhuDirectory.create();
+        if (!await hhuDirectory.exists()) {
+          await hhuDirectory.create();
+        }
+
+        final newImgPath = path.join(hhuDirectory.path, newImgName);
+
+        final newImg = await File(oldPath).copy(newImgPath);
+
+        // Preview with state
+        setState(() => this.image = newImg);
+
+        const snackBar = SnackBar(
+          content: Text(
+            'Image saved successfully',
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        const snackBar = SnackBar(
+          content: Text(
+            'Please select a customer id',
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
-
-      final newImgPath = path.join(hhuDirectory.path, newImgName);
-
-      final newImg = await File(oldPath).copy(newImgPath);
-
-      // Preview with state
-      setState(() => this.image = newImg);
     } on PlatformException catch (e) {
       print('Failed to Pick Image : $e');
     }
@@ -62,8 +81,8 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void itemSelectionChanged(String? item) {
-    print("Is this Printing at all");
-    print(item);
+    selectedCustomerId = item!;
+    print(selectedCustomerId);
   }
 
   @override
@@ -78,7 +97,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 DropdownSearch<String>(
                   mode: Mode.MENU,
                   showSelectedItems: true,
-                  items: ["static", "files"],
+                  items: items,
                   dropdownSearchDecoration: const InputDecoration(
                     labelText: "Business partner Id",
                     hintText: "Business partner id number",
@@ -90,11 +109,49 @@ class _CameraScreenState extends State<CameraScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 10,
                 ),
-                IconButton(
-                  onPressed: () => saveImageToDownloads(),
-                  icon: const Icon(Icons.camera),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pushNamed(context, '/'),
+                          child: Text('Cancel'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[300],
+                            foregroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ElevatedButton.icon(
+                          onPressed: () => saveImageToDownloads(),
+                          icon: const Icon(Icons.camera_alt),
+                          label: const Text('Open Camera'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 image != null
                     ? Image.file(
