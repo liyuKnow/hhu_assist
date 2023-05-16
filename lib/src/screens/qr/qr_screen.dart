@@ -49,7 +49,7 @@ class QRScreenState extends State<QRScreen> {
       try {
         final customerId = barcode!.code.toString();
         final reading = await objectbox.getReadingByCustomerId(customerId);
-        print("Found barcode : ${reading!.customerId}");
+        print("Found barcode : ${reading!.businessPartner}");
         if (reading != "") {
           final locationHistory =
               await objectbox.getLocationHistory(customerId);
@@ -64,7 +64,7 @@ class QRScreenState extends State<QRScreen> {
                   50
               : false;
           final args = EditScreenArguments(
-            reading.customerId,
+            reading.businessPartner,
             hasHistory,
             isInAllowedDistance,
             currentLat,

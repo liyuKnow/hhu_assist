@@ -32,7 +32,7 @@ void main() {
       businessPartnerName: 'John Doe Inc.',
       installation: '123 Main St.',
       device: 'Meter 1',
-      register: 'Register 1',
+      register: 1,
       scheduledMRDate: DateTime.now(),
       unitOfMeasure: 'kWh',
       portion: 'Portion 1',

@@ -39,10 +39,10 @@ class _CustomEditFormState extends State<CustomEditForm> {
     super.initState();
     readings = objectbox.getReadingsByCustomerId(widget.args.customerId);
     if (readings != null) {
-      _custIdController.text = readings[0]!.customerId;
-      _custName.text = readings[0]!.customerName;
-      _deviceId.text = readings[0]!.deviceId;
-      _legacyAccNo.text = readings[0]!.legacy.toString();
+      _custIdController.text = readings[0]!.businessPartner;
+      _custName.text = readings[0]!.businessPartnerName;
+      _deviceId.text = readings[0]!.device;
+      _legacyAccNo.text = readings[0]!.legacyAccNo.toString();
       _meterReadingUnit.text = readings[0]!.meterReadingUnit;
     }
     _currentLocation.text =
@@ -55,7 +55,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Enter Reading"),
+        title: const Text("Enter Reading"),
       ),
       body: readingForm(context),
     );
@@ -251,7 +251,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                   // check if the registries  and update accordingly
                   if (_readingRegistryOne.text != "") {
                     var readingRegOne = objectbox.getReadingByRegistry(
-                        readings[0]!.customerId, 1);
+                        readings[0]!.businessPartner, 1);
                     if (readingRegOne != null) {
                       readingRegOne.status = true;
                       readingRegOne.readingDate = readingDate;
@@ -265,7 +265,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
 
                   if (_readingRegistryTwo.text != "") {
                     var readingRegTwo = objectbox.getReadingByRegistry(
-                        readings[0]!.customerId, 2);
+                        readings[0]!.businessPartner, 2);
                     if (readingRegTwo != null) {
                       readingRegTwo.status = true;
                       readingRegTwo.readingDate = readingDate;
@@ -279,7 +279,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
 
                   if (_readingRegistryThree.text != "") {
                     var readingRegThree = objectbox.getReadingByRegistry(
-                        readings[0]!.customerId, 3);
+                        readings[0]!.businessPartner, 3);
                     if (readingRegThree != null) {
                       readingRegThree.status = true;
                       readingRegThree.readingDate = readingDate;

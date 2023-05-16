@@ -27,7 +27,7 @@ class _ReadingCardState extends State<ReadingCard> {
         String previousLocation = "No previous Location!";
 
         LocationHistory? locationHistory =
-            await objectbox.getLocationHistory(widget.reading.customerId);
+            await objectbox.getLocationHistory(widget.reading.businessPartner);
 
         PermissionController.requestLocation();
 
@@ -53,7 +53,7 @@ class _ReadingCardState extends State<ReadingCard> {
         }
 
         EditScreenArguments args = EditScreenArguments(
-          widget.reading.customerId,
+          widget.reading.businessPartner,
           hasHistory,
           isInAllowedDistance,
           currentLat,
@@ -86,16 +86,16 @@ class _ReadingCardState extends State<ReadingCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.reading.customerName,
+                      widget.reading.businessPartnerName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    Text("Customer Id : ${widget.reading.customerId}"),
-                    Text("device Id : ${widget.reading.deviceId}"),
+                    Text("Customer Id : ${widget.reading.businessPartner}"),
+                    Text("device Id : ${widget.reading.device}"),
                     Text(" status : ${widget.reading.status}"),
-                    Text(" Registry : ${widget.reading.registry}"),
+                    Text(" Registry : ${widget.reading.register}"),
                   ],
                 ),
               ),

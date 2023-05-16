@@ -23,13 +23,14 @@ class Reading {
   String businessPartner;
   String businessPartnerName;
   String installation;
+  String rateCategory;
   String device;
-  String register;
+  int register;
   DateTime scheduledMRDate;
   String unitOfMeasure;
   DateTime? readingDate;
   double? meterReading;
-  String? appearanceValue;
+  String? meterReadingNote;
 
   bool status;
 
@@ -41,6 +42,7 @@ class Reading {
     this.id = 0,
     this.status = false,
     this.meterReading,
+    this.meterReader,
     this.readingDate,
     this.hasPhoto,
     this.fieldPhoto,
@@ -48,11 +50,12 @@ class Reading {
     required this.businessPartner,
     required this.businessPartnerName,
     required this.installation,
+    required this.rateCategory,
     required this.device,
     required this.register,
     required this.scheduledMRDate,
     required this.unitOfMeasure,
-    this.appearanceValue,
+    this.meterReadingNote,
     required this.portion,
     required this.meterReadingUnit,
   });

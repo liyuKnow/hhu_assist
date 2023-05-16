@@ -206,12 +206,18 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
       try {
         Reading reading = Reading(
-          customerName: data[0],
-          customerId: data[1],
-          deviceId: data[2],
-          meterReadingUnit: data[3].toString(),
-          legacy: data[4],
-          registry: int.parse(data[5]),
+          portion: data[0],
+          meterReadingUnit: data[1],
+          // meterReader: data[2],
+          businessPartner: data[3],
+          legacyAccNo: data[4],
+          businessPartnerName: data[5],
+          installation: data[6],
+          rateCategory: data[7],
+          device: data[8],
+          register: data[9],
+          scheduledMRDate: DateTime.parse(data[10]),
+          unitOfMeasure: data[11],
         );
 
         objectbox.putReading(reading);
@@ -226,36 +232,58 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   exportData() async {
     try {
       // ^ export current database data to downloads folder
-      // Create a new Excel document.
+// Create a new Excel document.
       final XLSIO.Workbook workbook = XLSIO.Workbook();
-      //Accessing worksheet via index.
+//Accessing worksheet via index.
       final XLSIO.Worksheet sheet = workbook.worksheets[0];
 
-      // ADD THE HEADERS
-      sheet.getRangeByName('A1').setText('Customer Name');
-      sheet.getRangeByName('B1').setText('Customer Id');
-      sheet.getRangeByName('C1').setText('Device Id');
-      sheet.getRangeByName('D1').setText('Legacy');
-      sheet.getRangeByName('E1').setText('registry');
-      sheet.getRangeByName('F1').setText('Reading');
-      sheet.getRangeByName('G1').setText('Date');
-      sheet.getRangeByName('H1').setText('Appearance Value');
+// ADD THE HEADERS
+      sheet.getRangeByName('A1').setText('Portion');
+      sheet.getRangeByName('B1').setText('Meter Reading Unit');
+      sheet.getRangeByName('C1').setText('Meter Reader');
+      sheet.getRangeByName('D1').setText('Business Partner');
+      sheet.getRangeByName('E1').setText('Lg.Acc.Num');
+      sheet.getRangeByName('F1').setText('Business Partner Name');
+      sheet.getRangeByName('G1').setText('Installation');
+      sheet.getRangeByName('H1').setText('Rate Category');
+      sheet.getRangeByName('I1').setText('Device');
+      sheet.getRangeByName('J1').setText('Register');
+      sheet.getRangeByName('K1').setText('Sched. MR Date');
+      sheet.getRangeByName('L1').setText('Unit of Measure');
+      sheet.getRangeByName('M1').setText('Meter Reading Date');
+      sheet.getRangeByName('N1').setText('Meter Reading Record');
+      sheet.getRangeByName('O1').setText('Meter Reading Note');
 
-      // GET ALL DATA FROM OBJECT BOX
+// GET ALL DATA FROM OBJECT BOX
       List<Reading> readings = objectbox.readingBox.getAll();
 
       var i = 2;
       for (var reading in readings) {
-        sheet.getRangeByName('A$i').setText((reading.customerName).toString());
-        sheet.getRangeByName('B$i').setText((reading.customerId).toString());
-        sheet.getRangeByName('C$i').setText((reading.deviceId).toString());
-        sheet.getRangeByName('D$i').setText((reading.legacy).toString());
-        sheet.getRangeByName('E$i').setText((reading.registry).toString());
-        sheet.getRangeByName('F$i').setText((reading.meterReading).toString());
-        sheet.getRangeByName('G$i').setText((reading.readingDate).toString());
+        sheet.getRangeByName('A$i').setText((reading.portion).toString());
         sheet
-            .getRangeByName('H$i')
-            .setText((reading.appearanceValue).toString());
+            .getRangeByName('B$i')
+            .setText((reading.meterReadingUnit).toString());
+        sheet.getRangeByName('C$i').setText((reading.meterReader).toString());
+        sheet
+            .getRangeByName('D$i')
+            .setText((reading.businessPartner).toString());
+        sheet.getRangeByName('E$i').setText((reading.legacyAccNo).toString());
+        sheet
+            .getRangeByName('F$i')
+            .setText((reading.businessPartnerName).toString());
+        sheet.getRangeByName('G$i').setText((reading.installation).toString());
+        sheet.getRangeByName('H$i').setText((reading.rateCategory).toString());
+        sheet.getRangeByName('I$i').setText((reading.device).toString());
+        sheet.getRangeByName('J$i').setText((reading.register).toString());
+        sheet
+            .getRangeByName('K$i')
+            .setText((reading.scheduledMRDate).toString());
+        sheet.getRangeByName('L$i').setText((reading.unitOfMeasure).toString());
+        sheet.getRangeByName('M$i').setText((reading.readingDate).toString());
+        sheet.getRangeByName('N$i').setText((reading.meterReading).toString());
+        sheet
+            .getRangeByName('O$i')
+            .setText((reading.meterReadingNote).toString());
 
         i += 1;
       }

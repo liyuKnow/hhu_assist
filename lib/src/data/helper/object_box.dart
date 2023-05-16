@@ -31,7 +31,7 @@ class ObjectBox {
 
   Stream<List<Reading>> searchReadings(String q) {
     final builder = readingBox.query(
-      (Reading_.customerId.contains(q) | Reading_.deviceId.contains(q)) &
+      (Reading_.businessPartner.contains(q) | Reading_.device.contains(q)) &
           Reading_.status.equals(false),
     );
     // final builder = readingBox.query();
@@ -50,25 +50,25 @@ class ObjectBox {
 
   Reading? getReadingByCustomerId(String customerId) {
     Query<Reading> query =
-        readingBox.query(Reading_.customerId.contains(customerId)).build();
+        readingBox.query(Reading_.businessPartner.contains(customerId)).build();
     Reading? reading = query.findUnique();
     return reading;
   }
 
   List<Reading?> getReadingsByCustomerId(String customerId) {
     Query<Reading> query =
-        readingBox.query(Reading_.customerId.equals(customerId)).build();
+        readingBox.query(Reading_.businessPartner.equals(customerId)).build();
     List<Reading> readings = query.find();
     query.close();
 
     return readings;
   }
 
-  Reading? getReadingByRegistry(String customerId, int registry) {
+  Reading? getReadingByRegistry(String customerId, int register) {
     final query = store
         .box<Reading>()
-        .query(Reading_.customerId.equals(customerId) &
-            Reading_.registry.equals(registry))
+        .query(Reading_.businessPartner.equals(customerId) &
+            Reading_.register.equals(register))
         .build();
     final reading = query.findFirst();
 
@@ -93,7 +93,7 @@ class ObjectBox {
 
   void addLocationHistory(double lat, double long, Reading reading) {
     LocationHistory locationHistory =
-        LocationHistory(lat, long, reading.customerId);
+        LocationHistory(lat, long, reading.businessPartner);
     locationHistory.reading.target = reading;
 
     locationHistoryBox.put(locationHistory);
@@ -101,16 +101,16 @@ class ObjectBox {
 
   Stream<List<String>> searchCustomerIds(String q) {
     final builder = readingBox.query(
-      (Reading_.customerId.contains(q)),
+      (Reading_.businessPartner.contains(q)),
     );
-    return builder.watch(triggerImmediately: true).map(
-        (query) => query.find().map((reading) => reading.customerId).toList());
+    return builder.watch(triggerImmediately: true).map((query) =>
+        query.find().map((reading) => reading.businessPartner).toList());
   }
 
   List<String> getCustomerIds() {
     Query<Reading> query = readingBox.query().build();
     List<String> customerIds =
-        query.find().map((reading) => reading.customerId).toList();
+        query.find().map((reading) => reading.businessPartner).toList();
     query.close();
 
     return customerIds;
