@@ -16,22 +16,25 @@ class Reading {
   @Id()
   int id;
 
-  String customerName;
-  String customerId;
-  String deviceId;
+  String portion;
   String meterReadingUnit;
-  String? legacy;
+  String? meterReader;
+  String legacyAccNo;
+  String businessPartner;
+  String businessPartnerName;
+  String installation;
+  String device;
+  String register;
+  DateTime scheduledMRDate;
+  String unitOfMeasure;
+  DateTime? readingDate;
+  double? meterReading;
+  String? appearanceValue;
 
   bool status;
-  double? meterReading;
-  DateTime? readingDate;
 
   int? hasPhoto;
   String? fieldPhoto;
-
-  String? appearanceValue;
-
-  int registry;
 
   // CONSTRUCTOR
   Reading({
@@ -41,22 +44,18 @@ class Reading {
     this.readingDate,
     this.hasPhoto,
     this.fieldPhoto,
-    this.legacy,
-    required this.customerName,
-    required this.customerId,
-    required this.deviceId,
+    required this.legacyAccNo,
+    required this.businessPartner,
+    required this.businessPartnerName,
+    required this.installation,
+    required this.device,
+    required this.register,
+    required this.scheduledMRDate,
+    required this.unitOfMeasure,
+    this.appearanceValue,
+    required this.portion,
     required this.meterReadingUnit,
-    required this.registry,
   });
-
-  // final owner = ToOne<Owner>();
-
-  bool setFinished() {
-    status = !status;
-    return status;
-  }
-
-  String get getCustomerId => this.customerId;
 }
 
 @Entity()

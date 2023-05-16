@@ -58,7 +58,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(2, 5431337627199601995),
       name: 'Reading',
-      lastPropertyId: const IdUid(15, 1674156170337999711),
+      lastPropertyId: const IdUid(25, 8045684426375267127),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -67,28 +67,8 @@ final _entities = <ModelEntity>[
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 3586492801889185079),
-            name: 'customerName',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 6952670803355897433),
-            name: 'customerId',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 2348985825963805482),
-            name: 'deviceId',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(5, 2226428783302653604),
             name: 'meterReadingUnit',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 1871662094985102402),
-            name: 'legacy',
             type: 9,
             flags: 0),
         ModelProperty(
@@ -122,9 +102,54 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(14, 2198891144491561017),
-            name: 'registry',
-            type: 6,
+            id: const IdUid(16, 3522321180328951932),
+            name: 'portion',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 1380633695344285171),
+            name: 'meterReader',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 5991669769217963155),
+            name: 'legacyAccNo',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 2387465720053648796),
+            name: 'businessPartner',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 5092903525596811505),
+            name: 'businessPartnerName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 1747351095516612712),
+            name: 'installation',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 8770100175717837947),
+            name: 'device',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 5676008111892394466),
+            name: 'register',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 4242723859886190115),
+            name: 'scheduledMRDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(25, 8045684426375267127),
+            name: 'unitOfMeasure',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -185,7 +210,12 @@ ModelDefinition getObjectBoxModel() {
         2044593263589492031,
         4228717222709387174,
         8614374387751331549,
-        1674156170337999711
+        1674156170337999711,
+        3586492801889185079,
+        6952670803355897433,
+        2348985825963805482,
+        1871662094985102402,
+        2198891144491561017
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -236,33 +266,45 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Reading object, fb.Builder fbb) {
-          final customerNameOffset = fbb.writeString(object.customerName);
-          final customerIdOffset = fbb.writeString(object.customerId);
-          final deviceIdOffset = fbb.writeString(object.deviceId);
           final meterReadingUnitOffset =
               fbb.writeString(object.meterReadingUnit);
-          final legacyOffset =
-              object.legacy == null ? null : fbb.writeString(object.legacy!);
           final fieldPhotoOffset = object.fieldPhoto == null
               ? null
               : fbb.writeString(object.fieldPhoto!);
           final appearanceValueOffset = object.appearanceValue == null
               ? null
               : fbb.writeString(object.appearanceValue!);
-          fbb.startTable(16);
+          final portionOffset = fbb.writeString(object.portion);
+          final meterReaderOffset = object.meterReader == null
+              ? null
+              : fbb.writeString(object.meterReader!);
+          final legacyAccNoOffset = fbb.writeString(object.legacyAccNo);
+          final businessPartnerOffset = fbb.writeString(object.businessPartner);
+          final businessPartnerNameOffset =
+              fbb.writeString(object.businessPartnerName);
+          final installationOffset = fbb.writeString(object.installation);
+          final deviceOffset = fbb.writeString(object.device);
+          final registerOffset = fbb.writeString(object.register);
+          final unitOfMeasureOffset = fbb.writeString(object.unitOfMeasure);
+          fbb.startTable(26);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, customerNameOffset);
-          fbb.addOffset(2, customerIdOffset);
-          fbb.addOffset(3, deviceIdOffset);
           fbb.addOffset(4, meterReadingUnitOffset);
-          fbb.addOffset(5, legacyOffset);
           fbb.addBool(6, object.status);
           fbb.addFloat64(7, object.meterReading);
           fbb.addInt64(8, object.readingDate?.millisecondsSinceEpoch);
           fbb.addInt64(10, object.hasPhoto);
           fbb.addOffset(11, fieldPhotoOffset);
           fbb.addOffset(12, appearanceValueOffset);
-          fbb.addInt64(13, object.registry);
+          fbb.addOffset(15, portionOffset);
+          fbb.addOffset(16, meterReaderOffset);
+          fbb.addOffset(17, legacyAccNoOffset);
+          fbb.addOffset(18, businessPartnerOffset);
+          fbb.addOffset(19, businessPartnerNameOffset);
+          fbb.addOffset(20, installationOffset);
+          fbb.addOffset(21, deviceOffset);
+          fbb.addOffset(22, registerOffset);
+          fbb.addInt64(23, object.scheduledMRDate.millisecondsSinceEpoch);
+          fbb.addOffset(24, unitOfMeasureOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -284,18 +326,24 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 24),
               fieldPhoto: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 26),
-              legacy: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 14),
-              customerName: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              customerId: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              deviceId: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              meterReadingUnit: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
-              registry: const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0))
-            ..appearanceValue = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28);
+              legacyAccNo: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 38, ''),
+              businessPartner: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 40, ''),
+              businessPartnerName:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 42, ''),
+              installation: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 44, ''),
+              device: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 46, ''),
+              register: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 48, ''),
+              scheduledMRDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0)),
+              unitOfMeasure: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''),
+              appearanceValue: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 28),
+              portion: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
+              meterReadingUnit: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, ''))
+            ..meterReader = const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 36);
 
           return object;
         }),
@@ -363,53 +411,73 @@ class Reading_ {
   /// see [Reading.id]
   static final id = QueryIntegerProperty<Reading>(_entities[1].properties[0]);
 
-  /// see [Reading.customerName]
-  static final customerName =
-      QueryStringProperty<Reading>(_entities[1].properties[1]);
-
-  /// see [Reading.customerId]
-  static final customerId =
-      QueryStringProperty<Reading>(_entities[1].properties[2]);
-
-  /// see [Reading.deviceId]
-  static final deviceId =
-      QueryStringProperty<Reading>(_entities[1].properties[3]);
-
   /// see [Reading.meterReadingUnit]
   static final meterReadingUnit =
-      QueryStringProperty<Reading>(_entities[1].properties[4]);
-
-  /// see [Reading.legacy]
-  static final legacy =
-      QueryStringProperty<Reading>(_entities[1].properties[5]);
+      QueryStringProperty<Reading>(_entities[1].properties[1]);
 
   /// see [Reading.status]
   static final status =
-      QueryBooleanProperty<Reading>(_entities[1].properties[6]);
+      QueryBooleanProperty<Reading>(_entities[1].properties[2]);
 
   /// see [Reading.meterReading]
   static final meterReading =
-      QueryDoubleProperty<Reading>(_entities[1].properties[7]);
+      QueryDoubleProperty<Reading>(_entities[1].properties[3]);
 
   /// see [Reading.readingDate]
   static final readingDate =
-      QueryIntegerProperty<Reading>(_entities[1].properties[8]);
+      QueryIntegerProperty<Reading>(_entities[1].properties[4]);
 
   /// see [Reading.hasPhoto]
   static final hasPhoto =
-      QueryIntegerProperty<Reading>(_entities[1].properties[9]);
+      QueryIntegerProperty<Reading>(_entities[1].properties[5]);
 
   /// see [Reading.fieldPhoto]
   static final fieldPhoto =
-      QueryStringProperty<Reading>(_entities[1].properties[10]);
+      QueryStringProperty<Reading>(_entities[1].properties[6]);
 
   /// see [Reading.appearanceValue]
   static final appearanceValue =
+      QueryStringProperty<Reading>(_entities[1].properties[7]);
+
+  /// see [Reading.portion]
+  static final portion =
+      QueryStringProperty<Reading>(_entities[1].properties[8]);
+
+  /// see [Reading.meterReader]
+  static final meterReader =
+      QueryStringProperty<Reading>(_entities[1].properties[9]);
+
+  /// see [Reading.legacyAccNo]
+  static final legacyAccNo =
+      QueryStringProperty<Reading>(_entities[1].properties[10]);
+
+  /// see [Reading.businessPartner]
+  static final businessPartner =
       QueryStringProperty<Reading>(_entities[1].properties[11]);
 
-  /// see [Reading.registry]
-  static final registry =
-      QueryIntegerProperty<Reading>(_entities[1].properties[12]);
+  /// see [Reading.businessPartnerName]
+  static final businessPartnerName =
+      QueryStringProperty<Reading>(_entities[1].properties[12]);
+
+  /// see [Reading.installation]
+  static final installation =
+      QueryStringProperty<Reading>(_entities[1].properties[13]);
+
+  /// see [Reading.device]
+  static final device =
+      QueryStringProperty<Reading>(_entities[1].properties[14]);
+
+  /// see [Reading.register]
+  static final register =
+      QueryStringProperty<Reading>(_entities[1].properties[15]);
+
+  /// see [Reading.scheduledMRDate]
+  static final scheduledMRDate =
+      QueryIntegerProperty<Reading>(_entities[1].properties[16]);
+
+  /// see [Reading.unitOfMeasure]
+  static final unitOfMeasure =
+      QueryStringProperty<Reading>(_entities[1].properties[17]);
 }
 
 /// [Todo] entity fields to define ObjectBox queries.
