@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as XLSIO;
 import 'package:spreadsheet_decoder/spreadsheet_decoder.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hhu_assist/src/controller/permissions_controller.dart';
 import 'package:hhu_assist/src/screens/readings/reading_card.dart';
@@ -176,7 +177,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     } catch (e) {
       var snackBar = SnackBar(
         content: Text(
-          "${e.toString()}",
+          e.toString(),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -200,10 +201,11 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     objectbox.removeReadings();
     // objectbox.removeLocationHistories();
 
+    // DateFormat dateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
     // insert new data
     for (var i = 1; i < rowDetail.length; i++) {
       var data = rowDetail[i].split(',');
-
+      // format date
       try {
         Reading reading = Reading(
           portion: data[0],
@@ -215,11 +217,11 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           installation: data[6],
           rateCategory: data[7],
           device: data[8],
-          register: data[9],
-          scheduledMRDate: DateTime.parse(data[10]),
+          register: int.parse(data[9]),
+          scheduledMRDate: data[10],
           unitOfMeasure: data[11],
         );
-
+        // print("Reading object created successfully: $reading");
         objectbox.putReading(reading);
       } catch (e) {
         print(e);
@@ -301,14 +303,14 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
       const snackBar = SnackBar(
         content: Text(
-          "Data exported successfullly",
+          "Data exported successfully",
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
       var snackBar = SnackBar(
         content: Text(
-          "${e.toString()}",
+          e.toString(),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

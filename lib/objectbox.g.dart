@@ -139,7 +139,7 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(24, 4242723859886190115),
             name: 'scheduledMRDate',
-            type: 10,
+            type: 9,
             flags: 0),
         ModelProperty(
             id: const IdUid(25, 8045684426375267127),
@@ -287,6 +287,7 @@ ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.businessPartnerName);
           final installationOffset = fbb.writeString(object.installation);
           final deviceOffset = fbb.writeString(object.device);
+          final scheduledMRDateOffset = fbb.writeString(object.scheduledMRDate);
           final unitOfMeasureOffset = fbb.writeString(object.unitOfMeasure);
           final rateCategoryOffset = fbb.writeString(object.rateCategory);
           final meterReadingNoteOffset = object.meterReadingNote == null
@@ -308,7 +309,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(20, installationOffset);
           fbb.addOffset(21, deviceOffset);
           fbb.addInt64(22, object.register);
-          fbb.addInt64(23, object.scheduledMRDate.millisecondsSinceEpoch);
+          fbb.addOffset(23, scheduledMRDateOffset);
           fbb.addOffset(24, unitOfMeasureOffset);
           fbb.addOffset(25, rateCategoryOffset);
           fbb.addOffset(26, meterReadingNoteOffset);
@@ -346,7 +347,7 @@ ModelDefinition getObjectBoxModel() {
               rateCategory: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 54, ''),
               device: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 46, ''),
               register: const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0),
-              scheduledMRDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0)),
+              scheduledMRDate: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 50, ''),
               unitOfMeasure: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''),
               meterReadingNote: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 56),
               portion: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
@@ -476,7 +477,7 @@ class Reading_ {
 
   /// see [Reading.scheduledMRDate]
   static final scheduledMRDate =
-      QueryIntegerProperty<Reading>(_entities[1].properties[15]);
+      QueryStringProperty<Reading>(_entities[1].properties[15]);
 
   /// see [Reading.unitOfMeasure]
   static final unitOfMeasure =

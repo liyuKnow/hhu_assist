@@ -26,7 +26,7 @@ class Reading {
   String rateCategory;
   String device;
   int register;
-  DateTime scheduledMRDate;
+  String scheduledMRDate;
   String unitOfMeasure;
   DateTime? readingDate;
   double? meterReading;

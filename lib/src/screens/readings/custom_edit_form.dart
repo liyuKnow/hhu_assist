@@ -255,7 +255,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     if (readingRegOne != null) {
                       readingRegOne.status = true;
                       readingRegOne.readingDate = readingDate;
-                      readingRegOne.appearanceValue = _selectedRemark;
+                      readingRegOne.meterReadingNote = _selectedRemark;
                       readingRegOne.meterReading =
                           double.parse(_readingRegistryOne.text.toString());
 
@@ -269,7 +269,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     if (readingRegTwo != null) {
                       readingRegTwo.status = true;
                       readingRegTwo.readingDate = readingDate;
-                      readingRegTwo.appearanceValue = _selectedRemark;
+                      readingRegTwo.meterReadingNote = _selectedRemark;
                       readingRegTwo.meterReading =
                           double.parse(_readingRegistryTwo.text.toString());
 
@@ -283,7 +283,7 @@ class _CustomEditFormState extends State<CustomEditForm> {
                     if (readingRegThree != null) {
                       readingRegThree.status = true;
                       readingRegThree.readingDate = readingDate;
-                      readingRegThree.appearanceValue = _selectedRemark;
+                      readingRegThree.meterReadingNote = _selectedRemark;
                       readingRegThree.meterReading =
                           double.parse(_readingRegistryThree.text.toString());
 
